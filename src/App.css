@@ -1,38 +1,32 @@
-.App {
+body {
+  background: #fefefe;
+  background-image: linear-gradient(to bottom right, #973999, #f8598b, #f7bf00);
+  font-family: Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.guess {
+  margin-top: 50px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.guess > input {
+  background-color: #fff;
+  border: 2px solid #d6d6d6;
+  border-radius: 4px;
+  padding: 0;
+  margin: 25px 6px 0;
+  width: 65px;
+  height: 65px;
+  text-align: center;
+  font-size: 32px;
+  line-height: 1.29;
+  text-transform: uppercase;
+  background-clip: padding-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.guess > input:focus {
+  border: 2px solid skyblue;
+  outline: 0;
+  box-shadow: 0px 0px 3px rgba(131, 192, 253, 0.5);
 }
