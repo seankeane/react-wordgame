@@ -2,20 +2,11 @@ import React, { useRef, useState } from 'react';
 import './App.css';
 
 
-const useFocus = () => {
-    const htmlElRef = useRef(null)
-    const setFocus = () => {htmlElRef.current &&  htmlElRef.current.focus()}
-
-    return [ htmlElRef, setFocus ] 
-}
-
 const Guess = ({ answerLength }) => {
     const form = useRef();
     const guessArray = Array(answerLength);
     guessArray.fill("");
     const [guess, setGuess] = useState(guessArray);
-    const [focus, setFocus] = useState(0);
-    const [inputRef, setInputFocus] = useFocus();
 
     const submitAnswer = (event) => {
         console.log(event);
@@ -24,27 +15,37 @@ const Guess = ({ answerLength }) => {
     }
 
     const onKeyDown = (key, event) => {
-        switch (event.code) {
-            case "Backspace":
-                if (key !== 0 && event.target.value === "") {
-                    setFocus(key - 1);
-                }
-                break;
-            case "ArrowLeft":
-                if (key !== 0) {
-                    setFocus(key - 1);
-                }
-                break;
-            case "ArrowRight":
-                if (key !== (answerLength - 1)) {
-                    setFocus(key + 1);
-                }
-                break;
-            case "Enter":
-                form.current.requestSubmit();
-                break;
-            default:
-                //do nothing
+        try {
+            const parentDiv = event.target.parentElement;
+            switch (event.code) {
+                case "Backspace":
+                    // if backspace is pressed and there is no letter move to box on the left
+                    if (key !== 0 && event.target.value === "") {
+                        parentDiv.childNodes[key - 1].focus();
+                    }
+                    break;
+                case "ArrowLeft":
+                    // if left arrow key is pressed move to box on the left
+                    if (key !== 0) {
+                        parentDiv.childNodes[key - 1].focus();
+                    }
+                    break;
+                case "ArrowRight":
+                    // if right arrow key is pressed move to box on the right
+                    if (key !== (answerLength - 1)) {
+                        parentDiv.childNodes[key + 1].focus();
+                    }
+                    break;
+                case "Enter":
+                    // if enter is pressed check guess against answer
+                    form.current.requestSubmit();
+                    break;
+                default:
+                    // do nothing
+                    break;
+            }
+        } catch (error) {
+            console.log(`Failure during key down handler: ${error}`);
         }
     }
 
@@ -57,6 +58,13 @@ const Guess = ({ answerLength }) => {
             }
         });
         setGuess(newArray);
+        try {
+            if (key < (answerLength - 1)) {
+                event.target.parentElement.childNodes[key + 1].focus();
+            }
+        } catch (error) {
+            console.error(`Failed to switch focus due to error: ${error}`);
+        }
 
     }
 
@@ -64,8 +72,8 @@ const Guess = ({ answerLength }) => {
         <form ref={form} className="guess" onSubmit={submitAnswer}>
             {guess.map((val, key) => {
                 return (
-                    <input ref={inputRef} value={val} key={key} autoFocus={key === focus} type="text" maxLength="1" 
-                    onKeyDown={(e) => onKeyDown(key, e)} onChange={(e) => onLetterChange(key, e)}/>
+                    <input value={val} key={key} autoFocus={key === 0} type="text" maxLength="1"
+                        onKeyDown={(e) => onKeyDown(key, e)} onChange={(e) => onLetterChange(key, e)} />
                 )
             })}
         </form>
