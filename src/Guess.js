@@ -1,17 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 
 const Guess = ({ answerLength }) => {
-    const form = useRef();
-    const guessArray = Array(answerLength);
-    guessArray.fill("");
+    const guessArray = Array(answerLength).fill("");
     const [guess, setGuess] = useState(guessArray);
+    const [isGuessSubmitted, setIsGuessSubmitted] = useState(false);
 
-    const submitAnswer = (event) => {
-        console.log(event);
-        event.preventDefault();
-
+    const checkAnswer = () => {
+        setIsGuessSubmitted(true);
     }
 
     const onKeyDown = (key, event) => {
@@ -38,7 +35,7 @@ const Guess = ({ answerLength }) => {
                     break;
                 case "Enter":
                     // if enter is pressed check guess against answer
-                    form.current.requestSubmit();
+                    checkAnswer();
                     break;
                 default:
                     // do nothing
@@ -59,7 +56,7 @@ const Guess = ({ answerLength }) => {
         });
         setGuess(newArray);
         try {
-            if (key < (answerLength - 1)) {
+            if (event.target.value !== "" && key < (answerLength - 1)) {
                 event.target.parentElement.childNodes[key + 1].focus();
             }
         } catch (error) {
@@ -69,14 +66,14 @@ const Guess = ({ answerLength }) => {
     }
 
     return (
-        <form ref={form} className="guess" onSubmit={submitAnswer}>
+        <div className="guess">
             {guess.map((val, key) => {
                 return (
-                    <input value={val} key={key} autoFocus={key === 0} type="text" maxLength="1"
+                    <input value={val} key={key} disabled={isGuessSubmitted} autoFocus={key === 0} type="text" maxLength="1"
                         onKeyDown={(e) => onKeyDown(key, e)} onChange={(e) => onLetterChange(key, e)} />
                 )
             })}
-        </form>
+        </div>
     );
 }
 
