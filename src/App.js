@@ -13,8 +13,6 @@ const makeAnswer = (wordList) => {
   return wordList[n];
 }
 
-
-
 const App = () => {
   
   const [answerLength, setAnswerLength] = useState(1);
@@ -24,7 +22,9 @@ const App = () => {
     if (action === "reset") {
       setNumberOfGuesses(Array(1).fill(""))
     } else {
-      const updateGuess = [...numberOfGuesses, guess];
+      const updateGuess = [...numberOfGuesses];
+      updateGuess[updateGuess.length - 1] = guess;
+      updateGuess.push("");
       setNumberOfGuesses(updateGuess);
     }
   }
