@@ -14,7 +14,7 @@ const makeAnswer = (wordList) => {
 }
 
 
-function App() {
+const App = () => {
 
 
   const initialGuess = Array(1).fill("");
