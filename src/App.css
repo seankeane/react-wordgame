@@ -10,7 +10,7 @@ body {
   text-align: center;
 }
 
-.guess > input {
+.guess>input {
   background-color: #fff;
   border: 2px solid #d6d6d6;
   border-radius: 4px;
@@ -25,13 +25,13 @@ body {
   background-clip: padding-box;
 }
 
-.guess > input:focus {
+.guess>input:focus {
   border: 2px solid skyblue;
   outline: 0;
   box-shadow: 0px 0px 3px rgba(131, 192, 253, 0.5);
 }
 
-.guess > input:disabled {
+.guess>input:disabled {
   background: #dddddd;
 }
 
@@ -49,43 +49,52 @@ body {
 }
 
 input {
-    font-family: 'Major Mono Display', monospace;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-size: 3em;
-    color: #444;
-    text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 3em;
+  color: #444;
+  text-align: center;
 }
 
 .input-container {
-    position: relative;
-    width: 350px;
+  position: relative;
+  width: 350px;
 }
 
 #minus,
 #plus {
-    font-family: 'Major Mono Display', monospace;
-    background: #6240e8;
-    color: #fff;
-    font-weight: 900;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    font-size: 60px;
-    height: 100%;
-    cursor: pointer;
+  font-family: 'Major Mono Display', monospace;
+  background: #6240e8;
+  color: #fff;
+  font-weight: 900;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+  height: 100%;
+  cursor: pointer;
 }
 
 #minus {
-    content: "-";
-    top: 0;
-    left: 0;
+  content: "-";
+  top: 0;
+  left: 0;
 }
 
 #plus {
-    content: "+";
-    right: 0;
-    top: 0;
+  content: "+";
+  right: 0;
+  top: 0;
+}
+
+.lengthButton {
+  height: 40px;
+  font-size: 1em;
+  font-family: sans-serif;
+  background: #0a4d13;
+  color: #fff;
+  cursor: pointer;
 }
