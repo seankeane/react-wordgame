@@ -15,9 +15,7 @@ const makeAnswer = (wordList) => {
 
 
 function App() {
-  const wordList = makeWordList(3);
-  const answer = makeAnswer(wordList);
-  console.log(`The answer is ${answer}`);
+
 
   const initialGuess = Array(1).fill("");
   const [answerLength, setAnswerLength] = useState(1);
@@ -25,16 +23,19 @@ function App() {
 
   const onAnswerLengthReceived = (length) => {
     setAnswerLength(length);
+    const wordList = makeWordList(length);
+    const answer = makeAnswer(wordList);
+    console.log(`The answer is ${answer}`);
   }
 
   return (
     <div>
-      {answerLength === 1 && <LengthPicker onConfirmAnswerLength={onAnswerLengthReceived}/>}
+      {answerLength === 1 && <LengthPicker onConfirmAnswerLength={onAnswerLengthReceived} />}
       {answerLength >= 2 &&
         <div>
-          {numberOfGuesses.map(() => {
+          {numberOfGuesses.map((val, key) => {
             return (
-              <Guess answerLength={answerLength} />
+              <Guess key={key} answerLength={answerLength} />
             )
           })}
         </div>
