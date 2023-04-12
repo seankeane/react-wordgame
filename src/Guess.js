@@ -45,17 +45,53 @@ const guessReducer = (state, { action, key, value, answer }) => {
 
 const parseGuess = (guessArray) => {
     let guess = "";
-    guessArray.forEach(({letter}) => {
+    guessArray.forEach(({ letter }) => {
         guess += letter;
     });
     return guess;
 }
+
+const setLetterStyle = (check) => {
+    const correctStyle = {
+        'backgroundColor': 'green'
+    };
+    const nearlyStyle = {
+        'backgroundColor': 'yellow'
+    };
+    const invalidStyle = {
+        'backgroundColor': 'red'
+    }
+    switch (check) {
+        case 1:
+            return nearlyStyle;
+        case 2:
+            return correctStyle;
+        case -1:
+            return invalidStyle;
+        default:
+            return undefined;
+    }
+}
+
 
 const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) => {
     const guessArray = Array(answerLength).fill({ letter: "", check: 0 });
     const [guess, handleGuess] = useReducer(guessReducer, guessArray);
     const [isGuessSubmitted, setIsGuessSubmitted] = useState(false);
 
+    const reviewEnteredGuess = () => {
+        if (parseGuess(guess) === answer) {
+            handleGuess({ action: "review", answer: answer });
+            updateGuesses({ action: "solve", guess: guess });
+            setIsGuessSubmitted(true);
+        } else if (checkAnswerIsValidWord(guess)) {
+            handleGuess({ action: "review", answer: answer });
+            updateGuesses({ action: "add", guess: guess });
+            setIsGuessSubmitted(true);
+        } else {
+            handleGuess({ action: "invalidate-all" });
+        }
+    }
 
     const onKeyDown = (key, event) => {
         try {
@@ -81,19 +117,7 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
                     break;
                 case "Enter":
                     // if enter is pressed check guess against answer
-                    if (parseGuess(guess) === answer) {
-                        handleGuess({ action: "review", answer: answer });
-                        updateGuesses({ action: "solve", guess: guess });
-                        setIsGuessSubmitted(true);
-                    } else if (checkAnswerIsValidWord(guess)) {
-                        handleGuess({ action: "review", answer: answer });
-                        updateGuesses({ action: "add", guess: guess });
-                        setIsGuessSubmitted(true);
-                    } else {
-                        const updateGuess = [...guess];
-                        updateGuess.forEach(x => { x.check = -1 });
-                        handleGuess({ action: "invalidate-all" });
-                    }
+                    reviewEnteredGuess();
                     break;
                 default:
                     // do nothing
@@ -118,30 +142,6 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
             }
         } catch (error) {
             console.error(`Failed to switch focus due to error: ${error}`);
-        }
-
-    }
-
-    const correctStyle = {
-        'backgroundColor': 'green'
-    };
-    const nearlyStyle = {
-        'backgroundColor': 'yellow'
-    };
-    const invalidStyle = {
-        'backgroundColor': 'red'
-    }
-
-    const setLetterStyle = (check) => {
-        switch (check) {
-            case 1:
-                return nearlyStyle;
-            case 2:
-                return correctStyle;
-            case -1:
-                return invalidStyle;
-            default:
-                return undefined;
         }
     }
 
