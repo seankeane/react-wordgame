@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import Guess from './Guess';
 import LengthPicker from './LengthPicker';
@@ -17,6 +17,15 @@ const App = () => {
   
   const [answerLength, setAnswerLength] = useState(1);
   const [numberOfGuesses, setNumberOfGuesses] = useState([]);
+  const wordList = useRef([]);
+
+  const onAnswerLengthReceived = (length) => {
+    setAnswerLength(length);
+    updateGuesses({action: "reset"});
+    wordList.current = makeWordList(length);
+    const answer = makeAnswer(wordList.current);
+    console.log(`The answer is ${answer}`);
+  }
 
   const updateGuesses = ({action, guess}) => {
     if (action === "reset") {
@@ -28,14 +37,13 @@ const App = () => {
       setNumberOfGuesses(updateGuess);
     }
   }
-  
 
-  const onAnswerLengthReceived = (length) => {
-    setAnswerLength(length);
-    updateGuesses({action: "reset"});
-    const wordList = makeWordList(length);
-    const answer = makeAnswer(wordList);
-    console.log(`The answer is ${answer}`);
+  const checkAnswerIsValidWord = (guess) => {
+    let parsedGuess = '';
+    guess.forEach(x => {
+      parsedGuess += x.letter;
+    })
+    return wordList.current.includes(parsedGuess);
   }
 
   return (
@@ -45,7 +53,7 @@ const App = () => {
         <div>
           {numberOfGuesses.map((val, key) => {
             return (
-              <Guess key={key} answerLength={answerLength} updateGuesses={updateGuesses}/>
+              <Guess key={key} answerLength={answerLength} updateGuesses={updateGuesses} checkAnswerIsValidWord={checkAnswerIsValidWord}/>
             )
           })}
         </div>
