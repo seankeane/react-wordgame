@@ -6,7 +6,8 @@ body {
 }
 
 .guess {
-  margin-top: 50px;
+  margin-top: 5px;
+  margin-bottom: 2px;
   text-align: center;
 }
 
@@ -44,7 +45,7 @@ body {
 .container {
   position: absolute;
   left: 50%;
-  top: 100px;
+  top: 50px;
   transform: translateX(-50%);
 }
 

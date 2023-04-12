@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 
-const Guess = ({ answerLength }) => {
+const Guess = ({ answerLength, updateGuesses }) => {
     const guessArray = Array(answerLength).fill("");
     const [guess, setGuess] = useState(guessArray);
     const [isGuessSubmitted, setIsGuessSubmitted] = useState(false);
@@ -36,6 +36,7 @@ const Guess = ({ answerLength }) => {
                 case "Enter":
                     // if enter is pressed check guess against answer
                     checkAnswer();
+                    updateGuesses({action: "add", guess: "answer"});
                     break;
                 default:
                     // do nothing

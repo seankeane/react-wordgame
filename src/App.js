@@ -14,15 +14,25 @@ const makeAnswer = (wordList) => {
 }
 
 
+
 const App = () => {
-
-
-  const initialGuess = Array(1).fill("");
+  
   const [answerLength, setAnswerLength] = useState(1);
-  const [numberOfGuesses, setNumberOfGuesses] = useState(initialGuess);
+  const [numberOfGuesses, setNumberOfGuesses] = useState([]);
+
+  const updateGuesses = ({action, guess}) => {
+    if (action === "reset") {
+      setNumberOfGuesses(Array(1).fill(""))
+    } else {
+      const updateGuess = [...numberOfGuesses, guess];
+      setNumberOfGuesses(updateGuess);
+    }
+  }
+  
 
   const onAnswerLengthReceived = (length) => {
     setAnswerLength(length);
+    updateGuesses({action: "reset"});
     const wordList = makeWordList(length);
     const answer = makeAnswer(wordList);
     console.log(`The answer is ${answer}`);
@@ -35,7 +45,7 @@ const App = () => {
         <div>
           {numberOfGuesses.map((val, key) => {
             return (
-              <Guess key={key} answerLength={answerLength} />
+              <Guess key={key} answerLength={answerLength} updateGuesses={updateGuesses}/>
             )
           })}
         </div>
