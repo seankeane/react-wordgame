@@ -13,24 +13,24 @@ const Guess = ({ answerLength }) => {
 
     const onKeyDown = (key, event) => {
         try {
-            const parentDiv = event.target.parentElement;
+            const inputMap = { ...event.target.parentElement.childNodes };
             switch (event.code) {
                 case "Backspace":
                     // if backspace is pressed and there is no letter move to box on the left
                     if (key !== 0 && event.target.value === "") {
-                        parentDiv.childNodes[key - 1].focus();
+                        inputMap[key - 1].focus();
                     }
                     break;
                 case "ArrowLeft":
                     // if left arrow key is pressed move to box on the left
                     if (key !== 0) {
-                        parentDiv.childNodes[key - 1].focus();
+                        inputMap[key - 1].focus();
                     }
                     break;
                 case "ArrowRight":
                     // if right arrow key is pressed move to box on the right
                     if (key !== (answerLength - 1)) {
-                        parentDiv.childNodes[key + 1].focus();
+                        inputMap[key + 1].focus();
                     }
                     break;
                 case "Enter":
