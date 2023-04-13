@@ -38,7 +38,7 @@ const lettersLeftReducer = (state, { action, guess }) => {
 
 const App = () => {
 
-  const [answerLength, setAnswerLength] = useState(1);
+  const [answerLength, setAnswerLength] = useState(0);
   const [numberOfGuesses, setNumberOfGuesses] = useState([]);
   const [lettersLeft, setLettersLeft] = useReducer(lettersLeftReducer, makeAlphabet());
   const [result, setResult] = useState();
@@ -70,14 +70,9 @@ const App = () => {
         const listGuess = [...numberOfGuesses];
         listGuess[listGuess.length - 1] = guess;
         setNumberOfGuesses(listGuess);
-
-        //TODO return text that answer was found
         const finalTime = ((new Date().getTime() - startTime.current) / 1000).toFixed();
         const numOfGuesses = numberOfGuesses.length;
-        // stop and show timer? and number of guesses?
         setResult({ finalTime, numOfGuesses });
-        // restart button
-
         break;
       default:
         throw Error('Unknown action found in updateGuesses.');
@@ -94,14 +89,14 @@ const App = () => {
   }
 
   const onGoAgain = (event) => {
-    setAnswerLength(1);
+    setAnswerLength(0);
     setResult(null);
     setLettersLeft({ action: "reset" });
   }
 
   return (
     <div>
-      {answerLength === 1 && <LengthPicker onConfirmAnswerLength={onAnswerLengthReceived} />}
+      {!answerLength && <LengthPicker onConfirmAnswerLength={onAnswerLengthReceived} />}
       {answerLength >= 2 &&
         <div>
           {numberOfGuesses.map((val, key) => {
