@@ -2,8 +2,8 @@ import React, { useState, useRef, useReducer } from 'react';
 import './App.css';
 import Guess from './Guess';
 import LengthPicker from './LengthPicker';
+import ResultCard from './ResultCard';
 import EnglishWords from 'an-array-of-english-words';
-import { GiSandsOfTime, GiMagnifyingGlass, GiClockwiseRotation } from "react-icons/gi";
 import LetterTracker from './LetterTracker';
 
 const makeWordList = (answerLength) => {
@@ -42,15 +42,16 @@ const App = () => {
   const [numberOfGuesses, setNumberOfGuesses] = useState([]);
   const [lettersLeft, setLettersLeft] = useReducer(lettersLeftReducer, makeAlphabet());
   const [result, setResult] = useState();
-  const wordList = useRef([]);
-  const answer = useRef(null);
-  const startTime = useRef(new Date().getTime());
+  const wordList = useRef();
+  const answer = useRef();
+  const startTime = useRef();
 
   const onAnswerLengthReceived = (length) => {
     setAnswerLength(length);
     updateGuesses({ action: "reset" });
     wordList.current = makeWordList(length);
     answer.current = makeAnswer(wordList.current);
+    startTime.current = new Date().getTime();
     console.log(`The answer is ${answer.current}`);
   }
 
@@ -105,18 +106,7 @@ const App = () => {
             )
           })}
           {!result && <LetterTracker lettersLeft={lettersLeft} />}
-          {result && <div className="result">
-            <p>Yes, the answer was <strong>{answer.current}</strong>.</p>
-            <GiSandsOfTime className="result-icon" />
-            <p>You found the answer in <strong>{result.finalTime} seconds</strong></p>
-            <GiMagnifyingGlass className="result-icon" />
-            <p>and in <strong>{result.numOfGuesses}</strong> {result.numOfGuesses === 1 ? 'guess' : 'guesses'}!</p>
-            <div className="result-row" onClick={onGoAgain}>
-              <p>Click here to go again!</p>
-              <GiClockwiseRotation className="result-icon" />
-            </div>
-          </div>
-          }
+          {result && <ResultCard onGoAgain={onGoAgain} result={result} answer={answer.current}/>}
         </div>
       }
     </div>
