@@ -16,7 +16,7 @@ describe('Header', () => {
 
   test('renders answer length pickers', () => {
     render(<App />);
-    const button = screen.getByText(/CLICK HERE TO CONFIRM ANSWER LENGTH/i);
+    const button = screen.getByText(/Confirm Answer Length/i);
     const plus = screen.getByText("+");
     const minus = screen.getByText("-");
     expect(button).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('Header', () => {
     render(<App />);
     const plus = screen.getByText("+");
     fireEvent.click(plus);
-    const button = screen.getByText(/CLICK HERE TO CONFIRM ANSWER LENGTH/i);
+    const button = screen.getByText(/Confirm Answer Length/i);
     fireEvent.click(button);
     expect(setState).toHaveBeenCalledWith(6);
   });
@@ -37,7 +37,7 @@ describe('Header', () => {
     render(<App />);
     const minus = screen.getByText("-");
     fireEvent.click(minus);
-    const button = screen.getByText(/CLICK HERE TO CONFIRM ANSWER LENGTH/i);
+    const button = screen.getByText(/Confirm Answer Length/i);
     fireEvent.click(button);
     expect(setState).toHaveBeenCalledWith(4);
   });

@@ -59,7 +59,7 @@ const setLetterStyle = (check) => {
         'backgroundColor': 'yellow'
     };
     const invalidStyle = {
-        'backgroundColor': 'red'
+        'backgroundColor': '#dc5050'
     }
     switch (check) {
         case 1:
@@ -89,6 +89,7 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
             updateGuesses({ action: "add", guess: guess });
             setIsGuessSubmitted(true);
         } else {
+
             handleGuess({ action: "invalidate-all" });
         }
     }
@@ -143,6 +144,7 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
         } catch (error) {
             console.error(`Failed to switch focus due to error: ${error}`);
         }
+
     }
 
     return (

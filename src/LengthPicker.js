@@ -21,7 +21,8 @@ export default function LengthPicker({ onConfirmAnswerLength }) {
                     <input ref={input} type="number" min="2" max="10" id="number" value={answerLength} readOnly/>
                     <div ref={plus} id="plus">+</div>
                 </div>
-                <input className="lengthButton" type="button" onClick={() => onConfirmAnswerLength(answerLength)} value="CLICK HERE TO CONFIRM ANSWER LENGTH"/>
+                <br/>
+                <input className="lengthButton" type="button" onClick={() => onConfirmAnswerLength(answerLength)} value="Confirm Answer Length"/>
             </div>
         </>
     );
