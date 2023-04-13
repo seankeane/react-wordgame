@@ -85,11 +85,11 @@ const App = () => {
             )
           })}
           {result && <div className="result">
-            <p>Congrats, the answer was <strong>{answer.current}</strong>.</p>
+            <p>Yes, the answer was <strong>{answer.current}</strong>.</p>
             <GiSandsOfTime className="result-icon" />
-            <p>You found the answer in {result.finalTime} seconds.</p>
+            <p>You found the answer in <strong>{result.finalTime} seconds</strong></p>
             <GiMagnifyingGlass className="result-icon" />
-            <p>You found the answer in {result.numOfGuesses} {result.numOfGuesses === 1 ? 'guess' : 'gueses'}!</p>
+            <p>and in <strong>{result.numOfGuesses}</strong> {result.numOfGuesses === 1 ? 'guess' : 'guesses'}!</p>
             <div className="result-row" onClick={onGoAgain}>
               <p>Click here to go again!</p>
               <GiClockwiseRotation className="result-icon" />
