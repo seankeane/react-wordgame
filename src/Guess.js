@@ -82,11 +82,11 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
     const reviewEnteredGuess = () => {
         if (parseGuess(guess) === answer) {
             handleGuess({ action: "review", answer: answer });
-            updateGuesses({ action: "solve", guess: guess });
+            updateGuesses({ action: "solve", guess: parseGuess(guess) });
             setIsGuessSubmitted(true);
         } else if (checkAnswerIsValidWord(guess)) {
             handleGuess({ action: "review", answer: answer });
-            updateGuesses({ action: "add", guess: guess });
+            updateGuesses({ action: "add", guess: parseGuess(guess) });
             setIsGuessSubmitted(true);
         } else {
 

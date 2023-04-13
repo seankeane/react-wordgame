@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useReducer } from 'react';
 import './App.css';
 import Guess from './Guess';
 import LengthPicker from './LengthPicker';
 import EnglishWords from 'an-array-of-english-words';
 import { GiSandsOfTime, GiMagnifyingGlass, GiClockwiseRotation } from "react-icons/gi";
+import LetterTracker from './LetterTracker';
 
 const makeWordList = (answerLength) => {
   return EnglishWords.filter(d => (/^[a-z]*$/.test(d) && d.length === answerLength));
@@ -14,10 +15,32 @@ const makeAnswer = (wordList) => {
   return wordList[n];
 }
 
+const makeAlphabet = () => {
+  return 'abcdefghijklmnopqrstuvwxyz'.split('');
+}
+
+const lettersLeftReducer = (state, { action, guess }) => {
+  switch (action) {
+    case "reset":
+      return makeAlphabet();
+    case "update":
+      const newState = [];
+      state.forEach(x => {
+        if (!guess.includes(x)) {
+          newState.push(x);
+        }
+      });
+      return newState;
+    default:
+      throw Error('Unknown action in lettersLeftReducer.');
+  }
+}
+
 const App = () => {
 
   const [answerLength, setAnswerLength] = useState(1);
   const [numberOfGuesses, setNumberOfGuesses] = useState([]);
+  const [lettersLeft, setLettersLeft] = useReducer(lettersLeftReducer, makeAlphabet());
   const [result, setResult] = useState();
   const wordList = useRef([]);
   const answer = useRef(null);
@@ -41,6 +64,7 @@ const App = () => {
         updateGuess[updateGuess.length - 1] = guess;
         updateGuess.push("");
         setNumberOfGuesses(updateGuess);
+        setLettersLeft({ action: "update", guess: guess });
         break;
       case "solve":
         const listGuess = [...numberOfGuesses];
@@ -72,6 +96,7 @@ const App = () => {
   const onGoAgain = (event) => {
     setAnswerLength(1);
     setResult(null);
+    setLettersLeft({ action: "reset" });
   }
 
   return (
@@ -84,6 +109,7 @@ const App = () => {
               <Guess key={key} answerLength={answerLength} answer={answer.current} updateGuesses={updateGuesses} checkAnswerIsValidWord={checkAnswerIsValidWord} />
             )
           })}
+          {!result && <LetterTracker lettersLeft={lettersLeft} />}
           {result && <div className="result">
             <p>Yes, the answer was <strong>{answer.current}</strong>.</p>
             <GiSandsOfTime className="result-icon" />

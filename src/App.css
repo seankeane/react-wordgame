@@ -109,8 +109,8 @@ input {
 
 .lengthButton {
   border: 2px solid white;
-  height: 30px;
-  font-size: 15px;
+  height: 40px;
+  font-size: 20px;
   background: #0a4d13;
   color: #fff;
   cursor: pointer;
@@ -162,4 +162,24 @@ input {
   align-items: center;
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+.letter-tracker {
+  margin: 20px;
+  align-items: center;
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 600px) {
+  .letter-tracker {
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .letter-tracker {
+    font-size: 30px;
+  }
 }
