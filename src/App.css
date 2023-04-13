@@ -1,7 +1,7 @@
 body {
   background: #fefefe;
-  background-image: linear-gradient(to bottom right, #1884af, hsl(50, 93%, 66%), #f5c66e);
-  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  background-image: linear-gradient(to bottom right, #89cae3, hsl(49, 35%, 94%), #89cae3);
+  font-family: monospace, sans-serif;
   min-height: 100vh;
 }
 
@@ -65,7 +65,7 @@ body {
 }
 
 input {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: monospace, sans-serif;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -77,13 +77,27 @@ input {
 
 .input-container {
   position: relative;
-  width: 350px;
+  
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+@media screen and (min-width: 600px) {
+  .input-container {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .input-container {
+    width: 350px;
+  }
 }
 
 #minus,
 #plus {
   font-family: 'Major Mono Display', monospace;
-  background: #6240e8;
+  background: #0f299c;
   color: #fff;
   font-weight: 900;
   position: absolute;
@@ -106,13 +120,19 @@ input {
   top: 0;
 }
 
-.lengthButton {
+.length-button {
   border: 2px solid white;
-  height: 40px;
+  border-radius: 4px;
+  height: 55px;
   font-size: 20px;
-  background: #0a4d13;
-  color: #fff;
+  background: #0f299c;
+  color: #ffffffdf;
   cursor: pointer;
+}
+
+.length-button:hover {
+  color: #0f299c;
+  background: #ffffffdf;
 }
 
 .result {
@@ -123,15 +143,15 @@ input {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  background: rgb(187, 216, 227);
-  font-size: 30px;
+  background: #0f299c;
+  color: #ffffffdf;
 }
 
 @media screen and (min-width: 600px) {
   .result {
     margin: 30px 15%;
     width: 70%;
-    font-size: 30px;
+    font-size: 25px;
   }
 }
 
@@ -164,9 +184,9 @@ input {
 }
 
 .letter-tracker {
-  margin: 20px;
   align-items: center;
-  background: white;
+  background: #0f299c;
+  color: #ffffffdf;
   display: flex;
   justify-content: center;
 }
@@ -180,5 +200,28 @@ input {
 @media screen and (max-width: 600px) {
   .letter-tracker {
     font-size: 30px;
+  }
+}
+
+.letter-tracker-description {
+  margin-top: 30px;
+  font-size: 20px;
+  padding: 5px;
+  align-items: center;
+  background: #0f299c;
+  color: #ffffffdf;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (min-width: 600px) {
+  .length-button, .letter-tracker-description {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .length-button, .letter-tracker-description {
+    font-size: 15px;
   }
 }

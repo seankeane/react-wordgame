@@ -22,7 +22,7 @@ export default function LengthPicker({ onConfirmAnswerLength }) {
                     <div ref={plus} id="plus">+</div>
                 </div>
                 <br/>
-                <input className="lengthButton" type="button" onClick={() => onConfirmAnswerLength(answerLength)} value="Confirm Answer Length"/>
+                <input className="length-button" type="button" onClick={() => onConfirmAnswerLength(answerLength)} value={`Click to find the ${answerLength}-letter word!`}/>
             </div>
         </>
     );

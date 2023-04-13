@@ -10,6 +10,8 @@ TbCircleLetterV, TbCircleLetterW, TbCircleLetterX, TbCircleLetterY, TbCircleLett
 export default function LengthPicker({ lettersLeft }) {
 
     return (
+        <>
+        <div className="letter-tracker-description">Letters You Haven't Guessed:</div>
         <div className="letter-tracker">
         {lettersLeft.includes('a') && <TbCircleLetterA/>}
         {lettersLeft.includes('b') && <TbCircleLetterB/>}
@@ -38,5 +40,6 @@ export default function LengthPicker({ lettersLeft }) {
         {lettersLeft.includes('y') && <TbCircleLetterY/>}
         {lettersLeft.includes('z') && <TbCircleLetterZ/>}
         </div>
+        </>
     );
 }
