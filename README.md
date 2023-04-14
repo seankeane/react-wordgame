@@ -1,6 +1,6 @@
 # React.js Word Game
 
-This application is a word game similar to Wordle that was developed using React.js. The app allows you to choose the length of the word you want to guess - with options between 2 and 8 characters longs.
+This application is a word game similar to Wordle that was developed using `React.js`. The app allows you to choose the length of the word you want to guess - with options between 2 and 8 characters long.
 
 The application integrates with `Express.js` API backend application available in the <a href='https://github.com/seankeane/express-wordgame-api'>express-wordgame-api</a> repository. The backend application uses the <a href='https://www.npmjs.com/package/an-array-of-english-words'>an-array-of-english-words</a> npm package as its source dictionary. Based on this dictionary, the backend API returns a randomly generated answer in response to the `GET /answer?length` route and validates all guesses via calls to the `GET /checkGuess?guess` route.
 
