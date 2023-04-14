@@ -1,8 +1,8 @@
 # React.js Word Game
 
-A app is word game similar to Wordle that was developed using React.js. The app allows you to choose the length of the word you want to guess - with options between 2 and 8 characters longs.
+This repository is a word game similar to Wordle that was developed using React.js. The app allows you to choose the length of the word you want to guess - with options between 2 and 8 characters longs.
 
-The app utilises the <a href='https://www.npmjs.com/package/an-array-of-english-words'>an-array-of-english-words</a> npm package to generate an answer and validate guesses.
+The app utilises the <a href='https://www.npmjs.com/package/an-array-of-english-words'>an-array-of-english-words</a> npm package as the source dictionary. Based on this dictionary, the application generates an answer at random and checks the dictionaty to validate if guesses are valid words.
 
 ### Setup
 Clone the repository, open directory with in terminal and run the following commands:
