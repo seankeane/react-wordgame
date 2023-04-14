@@ -103,7 +103,7 @@ const App = () => {
             )
           })}
           {!result && <LetterTracker lettersLeft={lettersLeft} />}
-          {result && <ResultCard onGoAgain={onGoAgain} result={result} answer={answer.current}/>}
+          {result && <ResultCard onGoAgain={onGoAgain} result={result} answer={answer}/>}
         </div>
       }
     </div>
