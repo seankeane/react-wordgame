@@ -4,6 +4,7 @@ import Guess from './Guess';
 import LengthPicker from './LengthPicker';
 import ResultCard from './ResultCard';
 import LetterTracker from './LetterTracker';
+import { retrieveAnswer, validateGuess } from './apiHelper';
 
 const makeAlphabet = () => {
   return 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -24,18 +25,6 @@ const lettersLeftReducer = (state, { action, guess }) => {
     default:
       throw Error('Unknown action in lettersLeftReducer.');
   }
-}
-
-const retrieveAnswer = async (length) => {
-  const resp = await fetch(`https://wordgame-api.herokuapp.com/answer?length=${length}`);
-  //const resp = await fetch(`http://localhost:3001/answer?length=${length}`);
-  return resp.json();
-}
-
-const validateGuess = async (guess) => {
-  const resp = await fetch(`https://wordgame-api.herokuapp.com/checkGuess?guess=${guess}`);
-  //const resp = await fetch(`http://localhost:3001/checkGuess?guess=${guess}`);
-  return resp.json();
 }
 
 const App = () => {
