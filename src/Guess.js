@@ -97,7 +97,7 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
     const onKeyDown = (key, event) => {
         try {
             const inputMap = { ...event.target.parentElement.childNodes };
-            switch (event.code) {
+            switch (event.key) {
                 case "Backspace":
                     // if backspace is pressed and there is no letter move to box on the left
                     if (key !== 0 && event.target.value === "") {
