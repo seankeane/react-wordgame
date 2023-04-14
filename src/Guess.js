@@ -79,12 +79,12 @@ const Guess = ({ answerLength, answer, updateGuesses, checkAnswerIsValidWord }) 
     const [guess, handleGuess] = useReducer(guessReducer, guessArray);
     const [isGuessSubmitted, setIsGuessSubmitted] = useState(false);
 
-    const reviewEnteredGuess = () => {
+    const reviewEnteredGuess = async() => {
         if (parseGuess(guess) === answer) {
             handleGuess({ action: "review", answer: answer });
             updateGuesses({ action: "solve", guess: parseGuess(guess) });
             setIsGuessSubmitted(true);
-        } else if (checkAnswerIsValidWord(guess)) {
+        } else if (await checkAnswerIsValidWord(parseGuess(guess))) {
             handleGuess({ action: "review", answer: answer });
             updateGuesses({ action: "add", guess: parseGuess(guess) });
             setIsGuessSubmitted(true);

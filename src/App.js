@@ -3,17 +3,7 @@ import './App.css';
 import Guess from './Guess';
 import LengthPicker from './LengthPicker';
 import ResultCard from './ResultCard';
-import EnglishWords from 'an-array-of-english-words';
 import LetterTracker from './LetterTracker';
-
-const makeWordList = (answerLength) => {
-  return EnglishWords.filter(d => (/^[a-z]*$/.test(d) && d.length === answerLength));
-}
-
-const makeAnswer = (wordList) => {
-  const n = Math.floor(Math.random() * wordList.length);
-  return wordList[n];
-}
 
 const makeAlphabet = () => {
   return 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -36,23 +26,33 @@ const lettersLeftReducer = (state, { action, guess }) => {
   }
 }
 
+const retrieveAnswer = async (length) => {
+  const resp = await fetch(`https://wordgame-api.herokuapp.com/answer?length=${length}`);
+  //const resp = await fetch(`http://localhost:3001/answer?length=${length}`);
+  return resp.json();
+}
+
+const validateGuess = async (guess) => {
+  const resp = await fetch(`https://wordgame-api.herokuapp.com/checkGuess?guess=${guess}`);
+  //const resp = await fetch(`http://localhost:3001/checkGuess?guess=${guess}`);
+  return resp.json();
+}
+
 const App = () => {
 
   const [answerLength, setAnswerLength] = useState(0);
   const [numberOfGuesses, setNumberOfGuesses] = useState([]);
   const [lettersLeft, setLettersLeft] = useReducer(lettersLeftReducer, makeAlphabet());
   const [result, setResult] = useState();
-  const wordList = useRef();
-  const answer = useRef();
+  const [answer, setAnswer] = useState(0);
   const startTime = useRef();
 
-  const onAnswerLengthReceived = (length) => {
+  const onAnswerLengthReceived = async (length) => {
     setAnswerLength(length);
     updateGuesses({ action: "reset" });
-    wordList.current = makeWordList(length);
-    answer.current = makeAnswer(wordList.current);
+    const data = await retrieveAnswer(length);
+    setAnswer(data.answer);
     startTime.current = new Date().getTime();
-    console.log(`The answer is ${answer.current}`);
   }
 
   const updateGuesses = ({ action, guess }) => {
@@ -81,12 +81,9 @@ const App = () => {
 
   }
 
-  const checkAnswerIsValidWord = (guess) => {
-    let parsedGuess = '';
-    guess.forEach(x => {
-      parsedGuess += x.letter;
-    })
-    return wordList.current.includes(parsedGuess);
+  const checkAnswerIsValidWord = async(guess) => {
+    const resp = await validateGuess(guess);
+    return resp.isValid;
   }
 
   const onGoAgain = (event) => {
@@ -102,7 +99,7 @@ const App = () => {
         <div>
           {numberOfGuesses.map((val, key) => {
             return (
-              <Guess key={key} answerLength={answerLength} answer={answer.current} updateGuesses={updateGuesses} checkAnswerIsValidWord={checkAnswerIsValidWord} />
+              <Guess key={key} answerLength={answerLength} answer={answer} updateGuesses={updateGuesses} checkAnswerIsValidWord={checkAnswerIsValidWord} />
             )
           })}
           {!result && <LetterTracker lettersLeft={lettersLeft} />}
